@@ -1,0 +1,148 @@
+# Refuellings Tracker
+
+Refuellings tracker is a service allowing to track refuellings in a vehicle.
+Tracking includes: showing, adding, updating and deleting of records.
+This is REST API web application.
+
+## Getting started
+Before registrating each refuelling, firstly you need to register yourself as a user and then register your vehicle.
+Then simply you can perform standard operations on refuellings.
+
+###
+User registration
+User registration is performed by sending POST request at: /api/users with details about user as a body.
+It is required to provide information about your user name.
+
+Example request body:
+```
+{
+
+    "name": "user2",
+
+    "vehicles": [{}
+],
+    "refuellings": [
+{
+}]
+
+}
+```
+
+###
+Vehicle registration
+Vehicle registration is performed by sending POST request at: /api/vehicles with details about vehicle as a body.
+It is required to provide information about vehicle plate number and mileage.
+
+Example request body:
+```
+{
+
+    "plateNumber": "RZE45678",
+
+    "mileage": 78001,
+
+    "refuellings": [{}]
+}
+```
+## Refuellings
+
+ 
+### Refuelling registration
+
+Refuelling registration is performed by sending POST request at: /api/refuellings with details about vehicle as a body.
+It is required to provide information about refuelling such as mileage, fuel type, quantity and price. 
+In addition you can specify timestamp of the refuelling. If there is no timestamp provided, current server time will be set.
+
+Example request body:
+```
+{
+
+    "timestamp": "2018-05-04T14:50:00",
+
+    "mileage": 125108,
+
+    "fuelType": "ON",
+
+    "quantity": 27.34,
+
+    "price": 121.78
+
+    "user":
+	{
+	   "id: 1"
+	}
+}
+```
+
+### Refuelling browsing
+
+Refuelling browsing of already persisted record is performed by sending GET request at: /api/refuellings/{id}
+where path variable id is id of requested refuelling.
+
+Example request url:
+```
+/api/refuellings/3
+```
+
+Example respond body:
+```
+{
+
+    "id": 3,
+
+    "timestamp": "2018-05-04T14:50:00",
+
+    "mileage": 125108,
+
+    "fuelType": "ON",
+
+    "quantity": 27.34,
+
+    "price": 121.78
+
+}
+```
+
+### Refuelling modification
+
+Refuelling modification of already persisted record is performed by sending PUT request at: /api/refuellings/{id}
+where path variable id is id of requested refuelling to update.
+It is required to provide information about refuelling such as id, mileage, fuel type, quantity and price. 
+In addition you can specify timestamp of the refuelling.
+
+Example request url:
+```
+/api/refuellings/3
+```
+
+Example respond body:
+```
+{
+
+    "id": 3,
+    "timestamp": "2018-05-04T14:50:00",
+
+    "mileage": 125108,
+
+    "fuelType": "ON",
+
+    "quantity": 27.34,
+
+    "price": 121.78
+
+    "user":
+	{
+	   "id: 1"
+	}
+}
+```
+
+### Refuelling deletion
+
+Refuelling deletion of alread persisted record is performed by sending DELETE request at: /api/refuellings/{id}
+where path variable id is id of requested refuelling to delete.
+
+Example request url:
+```
+/api/refuellings/3
+```

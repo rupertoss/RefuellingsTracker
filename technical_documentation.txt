@@ -1,0 +1,76 @@
+# Refuellings Tracker
+
+Refuellings tracker is a service allowing to track refuellings in a vehicle.
+Tracking includes: showing, adding, updating and deleting of records.
+This is REST API web application written in Java / Maven / SpringBoot / MySql.
+
+## Getting started
+
+### Prerequisites
+
+Make sure you are using at least JDK 1.8 and Maven 3.X and mySql database 5.X.
+
+### Installing
+
+- Create database schema with name specified in application.properties - spring.datasource.url 
+(default is 'refuel': spring.datasource.url = jdbc:mysql://localhost:3306/refuel?useSSL=false)
+- Set database username in application.properties - spring.datasource.username
+- Set database passwordin application.properties - spring.datasource.password
+- Build the project by running `mvn install`
+- Run the service by running `mvn spring-boot:run`
+
+## Running the tests
+
+Execute tests by running `mvn clean test`
+
+## API Endpoints
+
+### `GET /api/refuellings/refuellingId`
+Get details about refuelling with required refuellingId.
+Returns `HTTP 200 OK' with details about refuelling as response body.
+
+### `POST /api/refuellings`
+Persist refuelling with details sent in request body.
+Return `HTTP 201 OK` with details about persisted refuelling as response body.
+
+### `PUT /api/refuellings/refuellingId`
+Update refuelling with details sent in request body.
+Return `HTTP 200 OK` with details about persisted refuelling as response body.
+
+### `DELETE /api/refuellings/refuellingId`
+Delete refuelling with required refuellingId.
+Returns `HTTP 204 OK` with empty response body.
+
+## Errors
+
+There is several errors when exception is thrown while performing user operations.
+
+Example response error:
+```
+{
+
+    "message": "There is no vehicle with specified id.",
+
+    "errorClass": "javax.persistence.EntityNotFoundException"
+
+}
+```
+
+
+### IllegalArgumentException
+When user sends invalid arguments in request which the application cannot perform an operation it returns 
+`HTTP 406 Not Acceptable` and JSON body with details about the error.
+
+### EntityExistsException
+When user wants to create an entry with id, when an entry with given id already exists 
+the application cannot perform an operation and returns `HTTP 409 Confilct`
+and JSON body with details about the error.
+
+### EntityNotFoundException
+When user wants to update or delete an entry with id, when an entry with given id does not exist
+the application cannot perform an operation and returns `HTTP 404 Not Found`
+and JSON body with details about the error.
+
+### General Exceptions
+When the application cannot perform an operation it returns `HTTP 500 Internal Server Error`
+and JSON body with details about the error.
